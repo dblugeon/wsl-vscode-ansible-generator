@@ -8,9 +8,7 @@ on:
             - "develop"
             - "issue*"
         tags:
-            - "*"
-    schedule:
-        - cron: "0 0 14 * *"
+            - "*"    
 
 jobs:
     get_vscode:
