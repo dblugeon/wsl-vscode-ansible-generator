@@ -12,5 +12,12 @@ jobs:
               uses: actions/checkout@v4
 
             - name: execute download
+              id: download_vscode
               run: ./download_vscode.sh
-            # todo use action cache and maybe action for install docker ?
+
+            - name: add cache
+              uses: actions/cache@v3
+              with:
+                key: ${{ steps.download_vscode.outputs.version_ref }}
+                path: |
+                  dist            
