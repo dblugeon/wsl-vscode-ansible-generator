@@ -1,2 +1,2 @@
 # wsl-vscode-ansible-generator
-This goal's repo is build an archive with wsl archive and vscode synchronized for usage remote wsl air gaped
+This repo goal's is build an archive wich contents an wsl archive and an vscode synchronized for usage remote wsl in air gaped environement.
