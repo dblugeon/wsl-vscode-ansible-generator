@@ -13,10 +13,4 @@ jobs:
 
             - name: execute download
               run: ./download_vscode.sh
-
-            - name: Save artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: wsl-vscode-artifact
-                  path: dist
-                  retention-days: 1
+            # todo use action cache and maybe action for install docker ?
