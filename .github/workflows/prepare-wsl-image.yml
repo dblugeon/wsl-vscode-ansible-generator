@@ -2,13 +2,7 @@
 
 name: prepare wsl image for vscode
 
-on:
-    push:
-        branches:
-            - "develop"
-            - "issue*"
-        tags:
-            - "*"    
+on: [push,workflow_dispatch]   
 
 jobs:
     get_vscode:
