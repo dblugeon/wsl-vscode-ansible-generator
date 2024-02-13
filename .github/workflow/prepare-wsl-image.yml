@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: prepare wsl image for vscode
+
+on:
+    push:
+        branches:
+            - "develop"
+            - "issue*"
+        tags:
+            - "*"
+    schedule:
+        - cron: "0 0 14 * *"
+
+jobs:
+    get_vscode:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: execute download
+              run: download_vscode.sh
+
+            - name: Save artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: my-artifact
+                  path: my_file.txt
+                  retention-days: 1
