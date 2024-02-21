@@ -1,4 +1,6 @@
 #!/bin/bash
+# requirement on ubuntu wsl, if you want launch the shell script
+# sudo apt install -y unzip jq
 set -o pipefail
 URL_VSCODE="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
 VS_UNCOMPRES_DIR=dist/vs_uncompress
