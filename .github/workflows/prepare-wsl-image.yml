@@ -2,7 +2,10 @@
 
 name: prepare wsl image for vscode
 
-on: [push,workflow_dispatch]   
+on: [push]
+
+permissions:
+  contents: write
 
 jobs:
     get_vscode:
