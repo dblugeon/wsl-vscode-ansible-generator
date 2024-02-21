@@ -1,6 +1,6 @@
 #!/bin/bash
 # requirement on ubuntu wsl, if you want launch the shell script
-# sudo apt install -y unzip jq
+# sudo apt install -y unzip zip jq
 set -o pipefail
 URL_VSCODE="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
 VS_UNCOMPRES_DIR=dist/vs_uncompress
@@ -34,7 +34,7 @@ fi
 echo "[OK]"
 
 echo "Unzip vscode..."
-unzip $vscode_zip_name -d $VS_UNCOMPRES_DIR
+unzip $vscode_zip_name resources/app/product.json -d $VS_UNCOMPRES_DIR
 RC_UNZIP=$?
 if [ $RC_UNZIP -ne 0 ]
 then
@@ -102,6 +102,27 @@ rm dist/vscode-server-linux-x64.tar.gz
 if [ $? -ne 0 ]
 then
     echo "[ERROR] during preparation first stage"
+    exit -1
+fi
+
+echo "Update $vscode_zip_name: enable portable mode"
+mkdir -p dist/data/extensions
+if [ $? -ne 0 ]
+then
+    echo "[ERROR] during preparation of dest directory"
+    exit -1
+fi
+
+cp -lr dist/vscode-server/extensions/* dist/data/extensions/
+if [ $? -ne 0 ]
+then
+    echo "[ERROR] during copy in hardlink  of extensions"
+    exit -1
+fi
+(cd dist && zip -r $(basename $vscode_zip_name) data)
+if [ $? -ne 0 ]
+then
+    echo "[ERROR] during update of $vscode_zip_name"
     exit -1
 fi
 
