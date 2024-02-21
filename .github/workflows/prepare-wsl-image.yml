@@ -28,7 +28,7 @@ jobs:
               run: podman run --name wsl_tmp localhost/wsl_tmp cat /etc/os-release
 
             - name: Export container
-              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
+              run: podman export wsl_tmp | gzip > dist/rocky8_wsl.tar.gz
             
             - name: Clean up podman
               run: podman rm -a && podman rmi -a
