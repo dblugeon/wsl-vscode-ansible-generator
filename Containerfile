@@ -12,6 +12,10 @@ ARG USER_GID=$USER_UID
 ARG VSCODE_COMMIT_ID=
 ARG VSCODE_VERSION=
 
+RUN echo -e "Welcome on rockylinux 8 wsl version\n \
+           with vscode server for $VSCODE_VERSION($VSCODE_COMMIT_ID).\n \
+           Podman is configured to use a remote serveur via podman desktop." > /etc/motd
+
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USERNAME -G wheel -m -s /bin/bash $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
@@ -20,11 +24,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     chown -R "$USERNAME:$USERNAME" /home/$USERNAME/
 
 USER $USERNAME
-COPY --chown=$USERNAME dist/vscode-server/ ~/.vscode-server/
+COPY --chown=$USERNAME dist/vscode-server/ /home/${USERNAME}/.vscode-server/
 COPY --chown=${USERNAME} containers.conf /home/${USERNAME}/.config/containers/containers.conf
-RUN echo -e "Welcome on rockylinux 8 wsl version\n \
-           with vscode server for $VSCODE_VERSION($VSCODE_COMMIT_ID).\n \
-           Podman is configured to use a remote serveur via podman desktop." > /etc/motd
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
 RUN pip3.8 install --user -r requirements.txt 
