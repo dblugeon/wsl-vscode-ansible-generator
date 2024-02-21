@@ -103,4 +103,12 @@ then
     exit -1
 fi
 
+echo "Download wsl2-ssh-bridge"
+(cd dist && curl --location --remote-name --remote-header-name https://github.com/KerickHowlett/wsl2-ssh-bridge/releases/download/latest/wsl2-ssh-bridge.exe)
+if [ $? -ne 0 ]
+then
+    echo "[ERROR] unable download wsl2-ssh-bridge"
+    exit -1
+fi
+
 echo "[ok]"
