@@ -14,10 +14,3 @@ jobs:
             - name: execute download
               id: download_vscode
               run: ./download_vscode.sh
-
-            - name: add cache
-              uses: actions/cache@v3
-              with:
-                key: ${{ steps.download_vscode.outputs.version_ref }}
-                path: |
-                  dist            
