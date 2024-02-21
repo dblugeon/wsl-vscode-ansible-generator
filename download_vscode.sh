@@ -5,7 +5,7 @@ VS_UNCOMPRES_DIR=dist/vs_uncompress
 
 # extensions wanted list
 EXTENSIONS_ID="redhat.vscode-yaml redhat.ansible ms-vscode-remote.vscode-remote-extensionpack natizyskunk.sftp \
-johnstoncode.svn-scm eamodio.gitlens gitlab.gitlab-workflow"
+johnstoncode.svn-scm gitlab.gitlab-workflow"
 
 #clean up for testing 
 rm -r dist $HOME/.vscode-server &> /dev/null
