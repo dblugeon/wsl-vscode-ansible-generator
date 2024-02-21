@@ -28,4 +28,5 @@ COPY --chown=$USERNAME dist/vscode-server/ /home/${USERNAME}/.vscode-server/
 COPY --chown=${USERNAME} containers.conf /home/${USERNAME}/.config/containers/containers.conf
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
-RUN pip3.8 install --user -r requirements.txt 
+RUN pip3.8 install --user -r /home/$USERNAME/requirements.txt && \
+    rm -rf /home/$USERNAME/requirements.txt /home/$USERNAME/.cache
