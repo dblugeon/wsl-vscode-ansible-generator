@@ -13,12 +13,11 @@ RUN dnf update -y && \
 ARG USERNAME=user
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-ARG VSCODE_COMMIT_ID=
 ARG VSCODE_VERSION=
 
 # TODO recheck motd
 RUN echo -e "Welcome on rockylinux 8 wsl version\n \
-with vscode server for $VSCODE_VERSION($VSCODE_COMMIT_ID).\n \
+with vscode server for $VSCODE_VERSION.\n \
 Podman is configured to use a remote serveur via podman desktop,\n \
 the podman machine must be started." > /etc/motd
 
