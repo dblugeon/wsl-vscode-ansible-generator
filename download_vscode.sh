@@ -3,7 +3,6 @@
 # sudo apt install -y unzip zip jq
 set -o pipefail
 URL_VSCODE="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
-VS_UNCOMPRES_DIR=dist/vs_uncompress
 
 # extensions wanted list
 EXTENSIONS_ID="redhat.vscode-yaml redhat.ansible ms-vscode-remote.vscode-remote-extensionpack natizyskunk.sftp \
@@ -33,8 +32,10 @@ then
 fi
 echo "[OK]"
 
-echo "Unzip vscode..."
-unzip $vscode_zip_name resources/app/product.json -d $VS_UNCOMPRES_DIR
+VS_UNCOMPRES_DIR=dist/$(basename $vscode_zip_name .zip)
+
+echo "Unzip vscode to $VS_UNCOMPRES_DIR..."
+unzip $vscode_zip_name -d $VS_UNCOMPRES_DIR
 RC_UNZIP=$?
 if [ $RC_UNZIP -ne 0 ]
 then
@@ -86,14 +87,19 @@ then
 fi
 echo "[ok]"
 
-echo "Installing extension in vscode server"
+echo "Installing extension in vscode server..."
 for ext in $EXTENSIONS_ID
 do
     dist/vscode-server-linux-x64/bin/code-server --install-extension $ext
+    if [ $? -ne 0 ]
+    then
+        echo "[ERROR] during installation of $ext"
+        exit -1    
+    fi
 done
 echo "[OK]"
 
-echo "Prepare vscode server final version"
+echo "Prepare vscode server final version..."
 mv $HOME/.vscode-server dist/vscode-server && \
 mkdir dist/vscode-server/bin && \
 mv dist/vscode-server-linux-x64 dist/vscode-server/bin/${commit_ref} && \
@@ -104,27 +110,24 @@ then
     echo "[ERROR] during preparation first stage"
     exit -1
 fi
+echo "[OK]"
 
-echo "Update $vscode_zip_name: enable portable mode"
-mkdir -p dist/data/extensions
+echo "Update $VS_UNCOMPRES_DIR: enable portable mode..."
+mkdir -p $VS_UNCOMPRES_DIR/data/extensions
 if [ $? -ne 0 ]
 then
-    echo "[ERROR] during preparation of dest directory"
+    echo "[ERROR] during preparation of dest directory $VS_UNCOMPRES_DIR/data/extensions"
     exit -1
 fi
 
-cp -lr dist/vscode-server/extensions/* dist/data/extensions/
+cp -lr dist/vscode-server/extensions/* $VS_UNCOMPRES_DIR/data/extensions/
 if [ $? -ne 0 ]
 then
     echo "[ERROR] during copy in hardlink  of extensions"
     exit -1
 fi
-(cd dist && zip -r $(basename $vscode_zip_name) data)
-if [ $? -ne 0 ]
-then
-    echo "[ERROR] during update of $vscode_zip_name"
-    exit -1
-fi
+rm $vscode_zip_name
+echo "[OK]"
 
 echo "Download wsl2-ssh-bridge"
 (cd dist && curl --location --remote-name --remote-header-name https://github.com/KerickHowlett/wsl2-ssh-bridge/releases/download/latest/wsl2-ssh-bridge.exe)

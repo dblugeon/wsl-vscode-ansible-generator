@@ -28,10 +28,10 @@ jobs:
               run: podman run --name wsl_tmp localhost/wsl_tmp cat /etc/os-release
 
             - name: Export container
-              run: podman export wsl_tmp | gzip > dist/rocky8_wsl.tar.gz
+              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
             
-            - name: Clean up podman
-              run: podman rm -a && podman rmi -a
+            - name: Compress Primary package
+              run: (cd dist && zip -r wsl-vscode-ansible.zip .)
 
             - name: Draft Release
               uses: softprops/action-gh-release@v1              
