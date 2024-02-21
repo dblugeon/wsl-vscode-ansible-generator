@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: prepare wsl image for vscode
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+    get_vscode:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install podman
+              uses: gacts/install-podman@v1
+
+            - name: Checkout repo
+              uses: actions/checkout@v4              
+
+            - name: Execute download dependencies
+              id: download_vscode
+              run: ./download_vscode.sh
+
+            - name: Build container image
+              run: podman build --build-arg VSCODE_VERSION=${{ steps.download_vscode.outputs.version_ref }} -t wsl_tmp .
+
+            - name: Run fresh image wsl_tmp
+              run: podman run --name wsl_tmp localhost/wsl_tmp cat /etc/os-release
+
+            - name: Export container
+              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
+            
+            - name: Compress Primary package
+              run: (cd dist && zip -r wsl-vscode-ansible.zip .)
+
+            - name: Draft Release
+              uses: softprops/action-gh-release@v1              
+              with:
+                tag_name: "rocky8-${{ steps.download_vscode.outputs.version_ref }}"
+                draft: true
+                files: |
+                  dist/*.zip
