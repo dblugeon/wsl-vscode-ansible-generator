@@ -1,6 +1,7 @@
 FROM rockylinux/rockylinux:8
 
-RUN dnf install -y bash-completion findutils sudo procps curl wget ca-certificates podman python38-pip git subversion openssh \
+RUN dnf update -y && \
+    dnf install -y bash-completion findutils sudo procps curl wget ca-certificates podman python38-pip git subversion openssh \
     bind-utils glibc-langpack-fr glibc-langpack-en man && \    
     dnf remove -y shadow-utils && dnf install -y shadow-utils && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
