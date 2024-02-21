@@ -39,4 +39,4 @@ jobs:
                 tag_name: "rocky8-${{ steps.download_vscode.outputs.version_ref }}"
                 draft: true
                 files: |
-                  dist/*
+                  dist/*.zip
