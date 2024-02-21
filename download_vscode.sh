@@ -62,7 +62,7 @@ then
     echo "[ERROR] during extract commit ref of $name"
     exit $RC_VERSION_REF
 fi
-echo "version_ref=$version_ref" >> "$GITHUB_OUTPUT "
+echo "version_ref=$version_ref" >> "$GITHUB_OUTPUT"
 echo "[ok]"
 
 # source https://stackoverflow.com/questions/56718453/using-remote-ssh-in-vscode-on-a-target-machine-that-only-allows-inbound-ssh-co
@@ -93,7 +93,7 @@ do
 done
 echo "[OK]"
 
-echo "Prepare vscode final version"
+echo "Prepare vscode server final version"
 mv $HOME/.vscode-server dist/vscode-server && \
 mkdir dist/vscode-server/bin && \
 mv dist/vscode-server-linux-x64 dist/vscode-server/bin/${commit_ref} && \
