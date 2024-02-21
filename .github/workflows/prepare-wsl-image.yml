@@ -29,3 +29,10 @@ jobs:
             
             - name: Clean up podman
               run: podman rm -a && podman rmi -a
+
+            - name: Draft Release
+              uses: softprops/action-gh-release@v1              
+              with:
+                draft: true
+                files: |
+                  dist/*
