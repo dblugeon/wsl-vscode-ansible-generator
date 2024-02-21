@@ -1,9 +1,13 @@
 FROM rockylinux/rockylinux:8
 
+# https://code.visualstudio.com/docs/remote/linux
+# requiretement for wsl remote on rhel
+# glibc libgcc libstdc++ python ca-certificates tar openssh curl wget libstdc++
+# I add subversion and git for my usage
+
 RUN dnf update -y && \
-    dnf install -y bash-completion findutils sudo procps curl wget ca-certificates podman python38-pip git subversion openssh \
-    bind-utils glibc-langpack-fr glibc-langpack-en man && \    
-    dnf remove -y shadow-utils && dnf install -y shadow-utils && \
+    dnf install -y sudo curl wget ca-certificates podman python38-pip git subversion openssh \
+    glibc-langpack-fr glibc-langpack-en man && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
 
 ARG USERNAME=user
@@ -12,9 +16,11 @@ ARG USER_GID=$USER_UID
 ARG VSCODE_COMMIT_ID=
 ARG VSCODE_VERSION=
 
+# TODO recheck motd
 RUN echo -e "Welcome on rockylinux 8 wsl version\n \
-           with vscode server for $VSCODE_VERSION($VSCODE_COMMIT_ID).\n \
-           Podman is configured to use a remote serveur via podman desktop." > /etc/motd
+with vscode server for $VSCODE_VERSION($VSCODE_COMMIT_ID).\n \
+Podman is configured to use a remote serveur via podman desktop,\n \
+the podman machine must be started." > /etc/motd
 
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USERNAME -G wheel -m -s /bin/bash $USERNAME \
