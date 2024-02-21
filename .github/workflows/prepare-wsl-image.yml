@@ -33,6 +33,7 @@ jobs:
             - name: Draft Release
               uses: softprops/action-gh-release@v1              
               with:
+                tag_name: "rocky8-${{ steps.download_vscode.version_ref }}"
                 draft: true
                 files: |
                   dist/*
