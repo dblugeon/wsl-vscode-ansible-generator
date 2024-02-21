@@ -22,7 +22,10 @@ jobs:
               run: podman build --build-arg VSCODE_COMMIT_ID=${{ steps.download_vscode.commit_ref }} --build-arg VSCODE_VERSION=${{ steps.download_vscode.version_ref }} -t wsl_tmp .
 
             - name: Run fresh images
-              run: podman run wsl_tmp --name wsl_tmp cat /etc/os-release
+              run: podman run --name wsl_tmp wsl_tmpcat /etc/os-release
 
             - name: Export container
               run: podman export wsl_tmp | tar cvzf dist/rocky8_wsl.tar.gz
+            
+            - name: Clean up podman
+              run: podman rm -a && podman rmi -a
