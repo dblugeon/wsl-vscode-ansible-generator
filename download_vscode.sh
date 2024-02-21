@@ -49,7 +49,7 @@ then
     echo "[ERROR] during extract commit ref of $name"
     exit $RC_UNZIP
 fi
-echo "commit_ref=$commit_ref" >> $GITHUB_OUTPUT    
+echo "commit_ref=$commit_ref" >> "$GITHUB_OUTPUT"    
 echo "[ok]"
 
 echo "Extract version tag $name's content..."
@@ -60,7 +60,7 @@ then
     echo "[ERROR] during extract commit ref of $name"
     exit $RC_VERSION_REF
 fi
-echo "version_ref=$version_ref" >> $GITHUB_OUTPUT 
+echo "version_ref=$version_ref" >> "$GITHUB_OUTPUT "
 echo "[ok]"
 
 # source https://stackoverflow.com/questions/56718453/using-remote-ssh-in-vscode-on-a-target-machine-that-only-allows-inbound-ssh-co
