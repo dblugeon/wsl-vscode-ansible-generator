@@ -1,4 +1,5 @@
 #!/bin/bash
+# inspired from https://github.com/KerickHowlett/wsl2-ssh-bridge?tab=readme-ov-file#bashzsh
 export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
 if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
   rm -f "$SSH_AUTH_SOCK"
