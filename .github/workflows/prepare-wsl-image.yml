@@ -27,8 +27,8 @@ jobs:
             - name: Run fresh image wsl_tmp
               run: podman run --name wsl_tmp localhost/wsl_tmp cat /etc/os-release
 
-            - name: Export container
-              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
+            - name: Remove vscode server
+              run: rm -rf dist/vscode-server
             
             - name: Compress Primary package
               run: (cd dist && zip -r wsl-vscode-ansible.zip .)
