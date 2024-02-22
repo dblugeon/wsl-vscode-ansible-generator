@@ -9,7 +9,7 @@ FROM rockylinux/rockylinux:8
 
 RUN dnf update -y && \
     dnf install -y sudo curl wget ca-certificates podman python38-pip git subversion openssh \
-    glibc-langpack-fr glibc-langpack-en man socat iproute subcription-manager findutils && \
+    glibc-langpack-fr glibc-langpack-en man socat iproute subscription-manager findutils && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
 
 ARG USERNAME=user
