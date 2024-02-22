@@ -36,7 +36,7 @@ COPY --chown=${USERNAME} containers.conf /home/${USERNAME}/.config/containers/co
 
 # add launch_wsl2_ssh_bridge.sh in bashrc.
 COPY --chown=${USERNAME} --chmod=700 launch_wsl2_ssh_bridge.sh /home${USERNAME}/.launch_wsl2_ssh_bridge.sh
-RUN echo ". /home${USERNAME}/.launch_wsl2_ssh_bridge.sh" >> .bashrc
+RUN echo ". /home${USERNAME}/.launch_wsl2_ssh_bridge.sh" >> /home/${USERNAME}/.bashrc
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
 RUN pip3.8 install --user -r /home/$USERNAME/requirements.txt && \
