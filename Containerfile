@@ -5,10 +5,11 @@ FROM rockylinux/rockylinux:8
 # glibc libgcc libstdc++ python ca-certificates tar openssh curl wget libstdc++
 # I add subversion and git for my usage
 # socat iproute is for launch_wsl2_ssh_bridge.sh
+# subcription-manager findutils: for usage foreman
 
 RUN dnf update -y && \
     dnf install -y sudo curl wget ca-certificates podman python38-pip git subversion openssh \
-    glibc-langpack-fr glibc-langpack-en man socat iproute subcription-manager && \
+    glibc-langpack-fr glibc-langpack-en man socat iproute subcription-manager findutils && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
 
 ARG USERNAME=user
