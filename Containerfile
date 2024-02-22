@@ -30,7 +30,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 COPY --chown=$USERNAME dist/vscode-server/ /home/${USERNAME}/.vscode-server/
+
+# podman preconfigured to use podman socket
 COPY --chown=${USERNAME} containers.conf /home/${USERNAME}/.config/containers/containers.conf
+
+# add launch_wsl2_ssh_bridge.sh in bashrc.
+COPY --chown=${USERNAME} --chmod=700 launch_wsl2_ssh_bridge.sh /home${USERNAME}/.launch_wsl2_ssh_bridge.sh
+RUN echo ". /home${USERNAME}/.launch_wsl2_ssh_bridge.sh" >> .bashrc
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
 RUN pip3.8 install --user -r /home/$USERNAME/requirements.txt && \
