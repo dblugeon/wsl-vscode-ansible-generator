@@ -29,15 +29,14 @@ jobs:
 
             - name: Remove vscode server
               run: rm -rf dist/vscode-server
-            
-            - name: Compress Primary package
-              run: (cd dist && zip -r wsl-vscode-ansible.zip .)
+
+            - name: Export container
+              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
 
             - name: Upload current artifact
               uses: actions/upload-artifact@v4
               with:
                 name: wsl-vscode-ansible-${{ steps.download_vscode.outputs.version_ref }}
                 path: dist/
-                compression-level: 0
                 if-no-files-found: error
                 retention-days: 5
