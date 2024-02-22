@@ -33,10 +33,11 @@ jobs:
             - name: Compress Primary package
               run: (cd dist && zip -r wsl-vscode-ansible.zip .)
 
-            - name: Draft Release
-              uses: softprops/action-gh-release@v1              
+            - name: Upload current artifact
+              uses: actions/upload-artifact@v4
               with:
-                tag_name: "rocky8-${{ steps.download_vscode.outputs.version_ref }}"
-                draft: true
-                files: |
-                  dist/*.zip
+                name: wsl-vscode-ansible-${{ steps.download_vscode.outputs.version_ref }}
+                path: dist/
+                compression-level: 0
+                if-no-files-found: error
+                retention-days: 5
