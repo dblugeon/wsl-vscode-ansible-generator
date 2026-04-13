@@ -33,7 +33,7 @@ jobs:
               run: rm -rf dist/vscode-server
 
             - name: Export container
-              run: podman export wsl_tmp -o dist/rocky8_wsl.tar
+              run: podman export wsl_tmp -o dist/rocky9_wsl.tar
 
             - name: Upload current artifact
               uses: actions/upload-artifact@v5
