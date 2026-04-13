@@ -1,4 +1,4 @@
-FROM rockylinux/rockylinux:8
+FROM docker.io/rockylinux/rockylinux:9
 
 # https://code.visualstudio.com/docs/remote/linux
 # requiretement for wsl remote on rhel
@@ -8,7 +8,7 @@ FROM rockylinux/rockylinux:8
 # subcription-manager findutils: for usage foreman
 
 RUN dnf update -y &&  dnf install -y findutils && \
-    dnf install -y sudo curl wget ca-certificates podman python38-pip git subversion openssh \
+    dnf install -y sudo curl-minimal wget ca-certificates podman python-pip git subversion openssh \
     glibc-langpack-fr glibc-langpack-en man socat iproute subscription-manager && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
 
@@ -18,7 +18,7 @@ ARG USER_GID=$USER_UID
 ARG VSCODE_VERSION=
 
 # TODO recheck motd
-RUN echo -e "Welcome on rockylinux 8 wsl version\n \
+RUN echo -e "Welcome on rockylinux 9 wsl version\n \
 with vscode server for $VSCODE_VERSION.\n \
 Podman is configured to use a remote serveur via podman desktop,\n \
 the podman machine must be started." > /etc/motd
