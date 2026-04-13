@@ -12,10 +12,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Install podman
-              uses: gacts/install-podman@v1
+              run: |
+                sudo apt-get update
+                sudo apt-get install -y podman
 
             - name: Checkout repo
-              uses: actions/checkout@v4              
+              uses: actions/checkout@v5           
 
             - name: Execute download dependencies
               id: download_vscode
@@ -34,7 +36,7 @@ jobs:
               run: podman export wsl_tmp -o dist/rocky8_wsl.tar
 
             - name: Upload current artifact
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v5
               with:
                 name: wsl-vscode-ansible-${{ steps.download_vscode.outputs.version_ref }}
                 path: dist/
