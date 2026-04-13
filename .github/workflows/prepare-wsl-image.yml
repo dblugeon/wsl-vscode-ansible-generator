@@ -17,7 +17,7 @@ jobs:
                 sudo apt-get install -y podman
 
             - name: Checkout repo
-              uses: actions/checkout@v5           
+              uses: actions/checkout@v6           
 
             - name: Execute download dependencies
               id: download_vscode
@@ -36,7 +36,7 @@ jobs:
               run: podman export wsl_tmp -o dist/rocky9_wsl.tar
 
             - name: Upload current artifact
-              uses: actions/upload-artifact@v5
+              uses: actions/upload-artifact@v7
               with:
                 name: wsl-vscode-ansible-${{ steps.download_vscode.outputs.version_ref }}
                 path: dist/
