@@ -42,5 +42,5 @@ RUN echo ". /home${USERNAME}/.launch_wsl2_ssh_bridge.sh" >> /home/${USERNAME}/.b
     mkdir /home/${USERNAME}/.ssh && chmod 700 -Rv /home/${USERNAME}/.ssh
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
-RUN pip3.8 install --user -r /home/$USERNAME/requirements.txt && \
+RUN pip install --user -r /home/$USERNAME/requirements.txt && \
     rm -rf /home/$USERNAME/requirements.txt /home/$USERNAME/.cache
