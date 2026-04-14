@@ -6,7 +6,7 @@ URL_VSCODE="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64
 
 # extensions wanted list
 EXTENSIONS_ID="redhat.vscode-yaml redhat.ansible ms-vscode-remote.vscode-remote-extensionpack natizyskunk.sftp \
-johnstoncode.svn-scm gitlab.gitlab-workflow"
+johnstoncode.svn-scm gitlab.gitlab-workflow ms-python.python"
 
 #clean up for testing 
 rm -r dist $HOME/.vscode-server &> /dev/null
@@ -44,8 +44,18 @@ then
 fi
 echo "[OK]"
 
+echo "Search production file in $VS_UNCOMPRES_DIR's content..."
+PRODUCT_JSON_PATH=$(find -name product.json -type f)
+RC_FIND=$?
+
+if [ $RC_FIND -ne 0 ]
+then
+    echo "[ERROR] during search product.json file in $VS_UNCOMPRES_DIR"
+    exit $RC_FIND
+fi
+
 echo "Extract commit ref from $name's content..."
-commit_ref=$(cat $VS_UNCOMPRES_DIR/resources/app/product.json | jq -r '.commit')
+commit_ref=$(cat $PRODUCT_JSON_PATH | jq -r '.commit')
 RC_COMMIT_REF=$?
 if [ $RC_COMMIT_REF -ne 0 ]
 then
@@ -56,7 +66,7 @@ echo "commit_ref=$commit_ref" >> "$GITHUB_OUTPUT"
 echo "[ok]"
 
 echo "Extract version tag $name's content..."
-version_ref=$(cat $VS_UNCOMPRES_DIR/resources/app/product.json | jq -r '.version')
+version_ref=$(cat $PRODUCT_JSON_PATH | jq -r '.version')
 RC_VERSION_REF=$?
 if [ $RC_VERSION_REF -ne 0 ]
 then

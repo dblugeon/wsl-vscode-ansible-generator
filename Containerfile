@@ -1,4 +1,4 @@
-FROM rockylinux/rockylinux:8
+FROM docker.io/rockylinux/rockylinux:9
 
 # https://code.visualstudio.com/docs/remote/linux
 # requiretement for wsl remote on rhel
@@ -7,8 +7,8 @@ FROM rockylinux/rockylinux:8
 # socat iproute is for launch_wsl2_ssh_bridge.sh
 # subcription-manager findutils: for usage foreman
 
-RUN dnf update -y &&  dnf install -y findutils && \
-    dnf install -y sudo curl wget ca-certificates podman python38-pip git subversion openssh \
+RUN dnf update -y && dnf install -y findutils && \
+    dnf install -y sudo curl-minimal wget ca-certificates podman python-pip git subversion openssh \
     glibc-langpack-fr glibc-langpack-en man socat iproute subscription-manager && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
 
@@ -18,7 +18,7 @@ ARG USER_GID=$USER_UID
 ARG VSCODE_VERSION=
 
 # TODO recheck motd
-RUN echo -e "Welcome on rockylinux 8 wsl version\n \
+RUN echo -e "Welcome on rockylinux 9 wsl version\n \
 with vscode server for $VSCODE_VERSION.\n \
 Podman is configured to use a remote serveur via podman desktop,\n \
 the podman machine must be started." > /etc/motd
@@ -42,5 +42,5 @@ RUN echo ". /home${USERNAME}/.launch_wsl2_ssh_bridge.sh" >> /home/${USERNAME}/.b
     mkdir /home/${USERNAME}/.ssh && chmod 700 -Rv /home/${USERNAME}/.ssh
 
 ADD requirements.txt /home/$USERNAME/requirements.txt 
-RUN pip3.8 install --user -r /home/$USERNAME/requirements.txt && \
+RUN pip install --user -r /home/$USERNAME/requirements.txt && \
     rm -rf /home/$USERNAME/requirements.txt /home/$USERNAME/.cache
