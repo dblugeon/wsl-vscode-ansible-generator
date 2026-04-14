@@ -7,7 +7,7 @@ FROM docker.io/rockylinux/rockylinux:9
 # socat iproute is for launch_wsl2_ssh_bridge.sh
 # subcription-manager findutils: for usage foreman
 
-RUN dnf update -y &&  dnf install -y findutils && \
+RUN dnf update -y && dnf install -y findutils && \
     dnf install -y sudo curl-minimal wget ca-certificates podman python-pip git subversion openssh \
     glibc-langpack-fr glibc-langpack-en man socat iproute subscription-manager && \
     dnf clean all && rm -rvf /var/cache/* /var/log/*
