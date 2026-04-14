@@ -6,7 +6,7 @@ URL_VSCODE="https://code.visualstudio.com/sha/download?build=stable&os=win32-x64
 
 # extensions wanted list
 EXTENSIONS_ID="redhat.vscode-yaml redhat.ansible ms-vscode-remote.vscode-remote-extensionpack natizyskunk.sftp \
-johnstoncode.svn-scm gitlab.gitlab-workflow"
+johnstoncode.svn-scm gitlab.gitlab-workflow ms-python.python"
 
 #clean up for testing 
 rm -r dist $HOME/.vscode-server &> /dev/null
