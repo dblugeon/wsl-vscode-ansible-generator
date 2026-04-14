@@ -9,8 +9,7 @@ if ! ss -a | grep -q "$SSH_AUTH_SOCK"; then
   else
     echo >&2 "WARNING: $wsl2_ssh_bridge_bin is not executable."
     echo >&2 "HINT: check existence and permission of $wsl2_ssh_bridge_bin"
-    echo >&2 "HINT: the path $wsl2_ssh_bridge_bin must be a symbolic link to windows partition"
-    echo >&2 "return of ls :$(ls -alh $wsl2_ssh_bridge_bin)"
+    echo >&2 "HINT: the path $wsl2_ssh_bridge_bin must be a symbolic link to windows partition"    
   fi
   unset wsl2_ssh_bridge_bin
 fi
